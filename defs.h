@@ -6,11 +6,11 @@ const int SCREEN_WIDTH = 1020;
 const int SCREEN_HEIGHT = 800;
 const char* WINDOW_TITLE = "Hello World!";
 
-// Cập nhật đường dẫn ảnh nhân vật
+
 const char* MAN_SPRITE_FILE = "New.png";
 const int MAN_CLIPS[][4] = {
-    { 0, 200, 600, 400 },
-    { 600,200, 600, 400}
+    { 170, 260, 290, 280 },
+    { 770,260, 290, 280}
    };
 const int MAN_FRAMES = sizeof(MAN_CLIPS)/sizeof(int)/4;
 
@@ -37,8 +37,8 @@ const int BIRD_FRAMES = sizeof(BIRD_CLIPS)/sizeof(int)/4;
 
 const char* RECTS= "skulls.png";
 const int RECTS_CLIPs[][4]={
-{0,0,800,650},
-{800,0,800,650}
+{0,0,800,800},
+{800,0,800,800}
 };
 const int RECTS_FRAMES= sizeof(RECTS_CLIPs)/sizeof(int)/4;
 
