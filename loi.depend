@@ -1,0 +1,101 @@
+# depslib dependency file v1.0
+1742542966 source:c:\code\loi\main.cpp
+	<iostream>
+	<SDL.h>
+
+1744622328 source:c:\code\loi\sdl.cpp
+	<iostream>
+	<vector>
+	<cstdlib>
+	<ctime>
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+	"bullets.h"
+	"block.h"
+	"check.h"
+	"play.h"
+	"initialize.h"
+	"quit.h"
+	"playb.h"
+
+1742921627 c:\code\loi\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+	<vector>
+
+1743080374 c:\code\loi\defs.h
+
+1744118344 c:\code\loi\bullets.h
+	"graphics.h"
+	"defs.h"
+
+1744118423 c:\code\loi\block.h
+
+1744157049 c:\code\loi\check.h
+
+1744622354 c:\code\loi\play.h
+	"defs.h"
+	"graphics.h"
+	<SDL.h>
+	"initialize.h"
+	"bullets.h"
+
+1744252464 c:\code\loi\initialize.h
+
+1744252791 c:\code\loi\quit.h
+
+1744622339 c:\code\loi\playb.h
+	"block.h"
+	"bullets.h"
+
+1744622328 source:d:\24021549\sdl.cpp
+	<iostream>
+	<vector>
+	<cstdlib>
+	<ctime>
+	<SDL.h>
+	<SDL_image.h>
+	"graphics.h"
+	"defs.h"
+	"bullets.h"
+	"block.h"
+	"check.h"
+	"play.h"
+	"initialize.h"
+	"quit.h"
+	"playb.h"
+
+1742921627 d:\24021549\graphics.h
+	<SDL.h>
+	<SDL_image.h>
+	"defs.h"
+	<vector>
+
+1743080374 d:\24021549\defs.h
+
+1744118344 d:\24021549\bullets.h
+	"graphics.h"
+	"defs.h"
+
+1744118423 d:\24021549\block.h
+
+1744157049 d:\24021549\check.h
+
+1744622354 d:\24021549\play.h
+	"defs.h"
+	"graphics.h"
+	<SDL.h>
+	"initialize.h"
+	"bullets.h"
+
+1744252464 d:\24021549\initialize.h
+
+1744252791 d:\24021549\quit.h
+
+1744622339 d:\24021549\playb.h
+	"block.h"
+	"bullets.h"
+

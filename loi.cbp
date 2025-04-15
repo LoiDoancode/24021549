@@ -32,8 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="block.h" />
+		<Unit filename="bullets.h" />
+		<Unit filename="check.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="graphics.h" />
+		<Unit filename="initialize.h" />
+		<Unit filename="play.h" />
+		<Unit filename="playb.h" />
+		<Unit filename="quit.h" />
 		<Unit filename="sdl.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
