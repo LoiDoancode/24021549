@@ -7,9 +7,9 @@ void playb(vector<Bullet>&bullets, vector<Block>& blocks, SDL_Texture* blockText
         manX += manSpeedX;
         manY += manSpeedY;
         if (manX < 0) manX = 0;
-        if (manX + 64 > SCREEN_WIDTH) manX = SCREEN_WIDTH - 64;
+        if (manX + 180 > SCREEN_WIDTH) manX = SCREEN_WIDTH - 180;
         if (manY < 0) manY = 0;
-        if (manY + 64 > SCREEN_HEIGHT) manY = SCREEN_HEIGHT - 64;
+        if (manY + 195 > SCREEN_HEIGHT) manY = SCREEN_HEIGHT - 195;
         for (auto it = bullets.begin(); it != bullets.end(); ) {
             it->update();
             bool bulletRemoved = false;
@@ -18,7 +18,7 @@ void playb(vector<Bullet>&bullets, vector<Block>& blocks, SDL_Texture* blockText
                     block.active = false;
                     score++;
                     if (score % 10 == 0) {
-                        blockSpeed += 3;
+                        blockSpeed += 1;
                     }
                     it = bullets.erase(it);
                     bulletRemoved = true;

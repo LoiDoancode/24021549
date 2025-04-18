@@ -51,13 +51,15 @@
 	"block.h"
 	"bullets.h"
 
-1744622328 source:d:\24021549\sdl.cpp
+1744946893 source:d:\24021549\sdl.cpp
 	<iostream>
 	<vector>
 	<cstdlib>
 	<ctime>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
 	"graphics.h"
 	"defs.h"
 	"bullets.h"
@@ -74,7 +76,7 @@
 	"defs.h"
 	<vector>
 
-1743080374 d:\24021549\defs.h
+1744871277 d:\24021549\defs.h
 
 1744118344 d:\24021549\bullets.h
 	"graphics.h"
@@ -82,9 +84,9 @@
 
 1744118423 d:\24021549\block.h
 
-1744157049 d:\24021549\check.h
+1744777182 d:\24021549\check.h
 
-1744622354 d:\24021549\play.h
+1744855136 d:\24021549\play.h
 	"defs.h"
 	"graphics.h"
 	<SDL.h>
@@ -95,7 +97,7 @@
 
 1744252791 d:\24021549\quit.h
 
-1744622339 d:\24021549\playb.h
+1744855321 d:\24021549\playb.h
 	"block.h"
 	"bullets.h"
 

@@ -1,4 +1,3 @@
-
 #ifndef _DEFS__H
 #define _DEFS__H
 
@@ -6,11 +5,14 @@ const int SCREEN_WIDTH = 1020;
 const int SCREEN_HEIGHT = 800;
 const char* WINDOW_TITLE = "Hello World!";
 
-
-const char* MAN_SPRITE_FILE = "New.png";
+const char* MAN_SPRITE_FILE = "spaceship.png";
 const int MAN_CLIPS[][4] = {
-    { 170, 260, 290, 280 },
-    { 770,260, 290, 280}
+    { 50, 10, 300, 340 },
+    { 395,10, 300, 340},
+    { 735, 10, 300, 340 },
+    { 1075, 10, 300, 340 },
+    { 735, 10, 300, 340 },
+    { 395,10, 300, 340},
    };
 const int MAN_FRAMES = sizeof(MAN_CLIPS)/sizeof(int)/4;
 
@@ -37,8 +39,8 @@ const int BIRD_FRAMES = sizeof(BIRD_CLIPS)/sizeof(int)/4;
 
 const char* RECTS= "skulls.png";
 const int RECTS_CLIPs[][4]={
-{0,0,800,800},
-{800,0,800,800}
+{0,0,800,780},
+{800,0,800,780}
 };
 const int RECTS_FRAMES= sizeof(RECTS_CLIPs)/sizeof(int)/4;
 
