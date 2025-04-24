@@ -32,16 +32,25 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="asset.h" />
 		<Unit filename="block.h" />
 		<Unit filename="bullets.h" />
 		<Unit filename="check.h" />
+		<Unit filename="cleanup.h" />
 		<Unit filename="defs.h" />
+		<Unit filename="game_state.h" />
 		<Unit filename="graphics.h" />
+		<Unit filename="init.h" />
 		<Unit filename="initialize.h" />
 		<Unit filename="play.h" />
 		<Unit filename="playb.h" />
 		<Unit filename="quit.h" />
+		<Unit filename="render.h" />
+		<Unit filename="reset.h" />
+		<Unit filename="resource_init.h" />
 		<Unit filename="sdl.cpp" />
+		<Unit filename="text.h" />
+		<Unit filename="text_init.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

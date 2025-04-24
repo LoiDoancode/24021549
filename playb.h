@@ -2,6 +2,7 @@
 #define _PLAYP__H
 #include "block.h"
 #include "bullets.h"
+#include "check.h"
 #include <SDL_mixer.h>
 using namespace std;
 

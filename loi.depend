@@ -51,7 +51,7 @@
 	"block.h"
 	"bullets.h"
 
-1745249528 source:d:\24021549\sdl.cpp
+1745466834 source:d:\24021549\sdl.cpp
 	<iostream>
 	<vector>
 	<cstdlib>
@@ -70,7 +70,7 @@
 	"quit.h"
 	"playb.h"
 
-1742921627 d:\24021549\graphics.h
+1745468027 d:\24021549\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	"defs.h"
@@ -86,7 +86,7 @@
 
 1744777182 d:\24021549\check.h
 
-1745249387 d:\24021549\play.h
+1745372609 d:\24021549\play.h
 	"defs.h"
 	"graphics.h"
 	<SDL.h>
@@ -94,13 +94,22 @@
 	"initialize.h"
 	"bullets.h"
 	"block.h"
+	"reset.h"
 
 1744252464 d:\24021549\initialize.h
 
 1744252791 d:\24021549\quit.h
 
-1745249242 d:\24021549\playb.h
+1745466421 d:\24021549\playb.h
 	"block.h"
 	"bullets.h"
+	"check.h"
 	<SDL_mixer.h>
+
+1745464585 d:\24021549\reset.h
+	"block.h"
+	"bullets.h"
+
+1745468038 source:d:\24021549\initgraphics.h
+	"graphics.h"
 

@@ -6,7 +6,8 @@
 #include <SDL_mixer.h>
 #include "initialize.h"
 #include "bullets.h"
-#include "block.h" // Thêm để truy cập kiểu Block
+#include "block.h"
+#include "reset.h"
 using namespace std;
 
 // Prototype của resetGame
