@@ -13,7 +13,7 @@ using namespace std;
 
 void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
                      vector<Bullet>& bullets, vector<Block>& blocks) {
-    if (comp.gameState == 1) { // Trạng thái Playing
+    if (comp.gameState == 1) {
         comp.man.tick();
         playb(bullets, blocks, res.blockTexture, res.popSound, comp.gameState);
 
@@ -32,8 +32,7 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
             comp.lastScore = score;
         }
     }
-    else if (comp.gameState == 2) { // Trạng thái Game Over
-        // Cập nhật texture điểm số cho màn Game Over
+    else if (comp.gameState == 2) {
         if (comp.gameOverScoreTexture) {
             SDL_DestroyTexture(comp.gameOverScoreTexture);
         }

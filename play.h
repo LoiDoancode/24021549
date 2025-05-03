@@ -10,7 +10,6 @@
 #include "reset.h"
 using namespace std;
 
-// Prototype của resetGame
 void resetGame(vector<Bullet>& bullets, vector<Block>& blocks, int& score, int& blockSpeed, int& frameCount, int& manX, int& manY, int& manSpeedX, int& manSpeedY);
 
 void play(vector<Bullet>&bullets, SDL_Texture* bulletTexture, Mix_Chunk* gunSound, int& gameState,
@@ -23,25 +22,22 @@ void play(vector<Bullet>&bullets, SDL_Texture* bulletTexture, Mix_Chunk* gunSoun
         else if (e.type == SDL_MOUSEBUTTONDOWN) {
             int x, y;
             SDL_GetMouseState(&x, &y);
-            if (gameState == 0) { // Màn Start
+            if (gameState == 0) {
                 gameState = 1;
             }
-            else if (gameState == 2) { // Màn Game Over
-                // Kiểm tra nhấn vào "Thử lại"
+            else if (gameState == 2) {
                 if (x >= retryRect.x && x <= retryRect.x + retryRect.w &&
                     y >= retryRect.y && y <= retryRect.y + retryRect.h) {
-                    // Đặt lại trò chơi
                     resetGame(bullets, blocks, score, blockSpeed, frameCount, manX, manY, manSpeedX, manSpeedY);
-                    gameState = 1; // Chuyển về trạng thái Playing
+                    gameState = 1;
                 }
-                // Kiểm tra nhấn vào "Thoát"
                 if (x >= exitRect.x && x <= exitRect.x + exitRect.w &&
                     y >= exitRect.y && y <= exitRect.y + exitRect.h) {
-                    quit = true; // Thoát game
+                    quit = true;
                 }
             }
         }
-        else if (e.type == SDL_KEYDOWN && gameState == 1) { // Chỉ xử lý phím khi đang chơi
+        else if (e.type == SDL_KEYDOWN && gameState == 1) {
             Uint16 mod = SDL_GetModState();
             bool ctrlPressed = (mod & KMOD_CTRL) != 0;
             switch (e.key.keysym.sym) {

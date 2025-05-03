@@ -5,4 +5,4 @@ bool checkGameOver(const Block& block, int manX, int manY) {
             block.y < manY + 195 && block.y + block.height > manY) ||
            (block.y >= SCREEN_HEIGHT);
 }
-#endif // _CHECK__H
+#endif

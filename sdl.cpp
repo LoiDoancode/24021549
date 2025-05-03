@@ -25,7 +25,6 @@ int main(int argc, char *argv[]) {
     srand(time(0));
     Graphics graphics;
     graphics.init();
-    // Khởi tạo tài nguyên
     Resources res;
     if (!initResources(res, graphics)) {
         graphics.quit();
@@ -33,13 +32,11 @@ int main(int argc, char *argv[]) {
     }
     vector<Bullet> bullets;
     vector<Block> blocks;
-    // Khởi tạo các thành phần văn bản và sprite tàu
     TextComponents comp;
     if (!initTextComponents(comp, res.font, graphics.renderer, res.manTexture, res.gunSound, res.popSound, res.bgMusic)) {
         graphics.quit();
         return 1;
     }
-    // Chạy vòng lặp chính
     gameLoop(graphics, res, comp, bullets, blocks);
     cleanupResources(graphics, res, comp);
     return 0;

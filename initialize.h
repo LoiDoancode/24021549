@@ -12,4 +12,4 @@
     int frameCount = 0;
 
 
-#endif // _INITIALIZE__H
+#endif

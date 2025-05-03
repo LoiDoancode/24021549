@@ -7,4 +7,4 @@ void endg(SDL_Texture* bulletTexture, SDL_Texture* manTexture, SDL_Texture* bloc
     SDL_DestroyTexture(manTexture);
     SDL_DestroyTexture(blockTexture);
 }
-#endif // _QUIT__H
+#endif

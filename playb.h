@@ -36,7 +36,7 @@ void playb(vector<Bullet>&bullets, vector<Block>& blocks, SDL_Texture* blockText
     for (auto it = blocks.begin(); it != blocks.end(); ) {
         it->update();
         if (checkGameOver(*it, manX, manY)) {
-            gameState = 2; // Chuyển sang trạng thái Game Over
+            gameState = 2;
             break;
         }
         if (!it->active) {
@@ -45,7 +45,6 @@ void playb(vector<Bullet>&bullets, vector<Block>& blocks, SDL_Texture* blockText
             ++it;
         }
     }
-
     if (frameCount % 30 == 0) {
         int minX = 50;
         int maxX = SCREEN_WIDTH - 50 - 50;
@@ -54,4 +53,4 @@ void playb(vector<Bullet>&bullets, vector<Block>& blocks, SDL_Texture* blockText
     }
     frameCount++;
 }
-#endif // _PLAYP__H
+#endif

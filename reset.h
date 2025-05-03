@@ -14,4 +14,4 @@ using namespace std;
     manSpeedX = 0;
     manSpeedY = 0;
 }
-#endif // _RESET__H
+#endif
