@@ -9,10 +9,13 @@
 #include "text_init.h"
 
 void cleanupResources(Graphics& graphics, Resources& res, TextComponents& comp) {
+    // Kết thúc nhạc và âm thanh
     Mix_HaltMusic();
     Mix_FreeChunk(res.gunSound);
     Mix_FreeChunk(res.popSound);
     Mix_FreeMusic(res.bgMusic);
+
+    // Giải phóng tài nguyên
     if (comp.scoreTexture) {
         SDL_DestroyTexture(comp.scoreTexture);
     }
@@ -30,6 +33,9 @@ void cleanupResources(Graphics& graphics, Resources& res, TextComponents& comp) 
     }
     if (comp.titleTexture) {
         SDL_DestroyTexture(comp.titleTexture);
+    }
+    if (comp.starsTexture) { // Dọn dẹp starsTexture
+        SDL_DestroyTexture(comp.starsTexture);
     }
     Mix_CloseAudio();
     TTF_CloseFont(res.font);

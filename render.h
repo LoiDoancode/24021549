@@ -9,15 +9,17 @@
 #include "resource_init.h"
 #include "text_init.h"
 #include "initialize.h"
+#include "defs.h"
 using namespace std;
 
 void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bullet>& bullets,
-                 vector<Block>& blocks, TextComponents& comp) {
+                vector<Block>& blocks, TextComponents& comp) {
     graphics.prepareScene();
     SDL_Rect backgroundRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(graphics.renderer, backgroundTexture, nullptr, &backgroundRect);
 
-    if (comp.gameState == 0) {
+    // Cập nhật alpha để tạo hiệu ứng nhấp nháy cho "Start", "Quit", và "Retry"
+    if (comp.gameState == 0 || comp.gameState == 2) {
         if (comp.alphaIncreasing) {
             comp.startAlpha += 5;
             if (comp.startAlpha >= 255) {
@@ -31,17 +33,41 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
                 comp.alphaIncreasing = true;
             }
         }
+    }
+
+    if (comp.gameState == 0) { // Trạng thái Start
+        // Hiển thị tiêu đề "Space Shooter"
         int titleW, titleH;
         SDL_QueryTexture(comp.titleTexture, nullptr, nullptr, &titleW, &titleH);
         SDL_Rect titleRect = {(SCREEN_WIDTH - titleW) / 2, SCREEN_HEIGHT / 2 - 100, titleW, titleH};
         SDL_RenderCopy(graphics.renderer, comp.titleTexture, nullptr, &titleRect);
+
+        // Hiển thị "Start" với hiệu ứng nhấp nháy
         int texW, texH;
         SDL_QueryTexture(comp.startTexture, nullptr, nullptr, &texW, &texH);
-        SDL_Rect startRect = {(SCREEN_WIDTH - texW) / 2, (SCREEN_HEIGHT - texH) / 2, texW, texH};
+        comp.startRect = {(SCREEN_WIDTH - texW) / 2, (SCREEN_HEIGHT - texH) / 2, texW, texH};
         SDL_SetTextureAlphaMod(comp.startTexture, comp.startAlpha);
-        SDL_RenderCopy(graphics.renderer, comp.startTexture, nullptr, &startRect);
+        SDL_RenderCopy(graphics.renderer, comp.startTexture, nullptr, &comp.startRect);
+
+        // Hiển thị "Quit" với hiệu ứng nhấp nháy, ngay dưới "Start"
+        int exitW, exitH;
+        SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
+        comp.startScreenExitRect = {(SCREEN_WIDTH - exitW) / 2, (SCREEN_HEIGHT - exitH) / 2 + texH + 20, exitW, exitH};
+        SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
+        SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.startScreenExitRect);
+
+        // Vẽ các ngôi sao với animation
+        for (auto& star : comp.stars) {
+            if (star.active) {
+                SDL_Rect clip = STAR_CLIPS[star.currentFrame];
+                SDL_Rect renderRect = {star.rect.x, star.rect.y,
+                                      (clip.w == 600) ? 32 : 16,
+                                      (clip.h == 600) ? 32 : 16};
+                SDL_RenderCopy(graphics.renderer, comp.starsTexture, &clip, &renderRect);
+            }
+        }
     }
-    else if (comp.gameState == 1) {
+    else if (comp.gameState == 1) { // Trạng thái Playing
         graphics.render(manX, manY, comp.man);
         for (auto &bullet : bullets) {
             bullet.render(graphics.renderer);
@@ -57,20 +83,27 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
             SDL_RenderCopy(graphics.renderer, comp.scoreTexture, nullptr, &scoreRect);
         }
     }
-    else if (comp.gameState == 2) {
+    else if (comp.gameState == 2) { // Trạng thái Game Over
+        // Hiển thị điểm số
         if (comp.gameOverScoreTexture) {
             int texW, texH;
             SDL_QueryTexture(comp.gameOverScoreTexture, nullptr, nullptr, &texW, &texH);
             SDL_Rect scoreRect = {(SCREEN_WIDTH - texW) / 2, SCREEN_HEIGHT / 2 - 50, texW, texH};
             SDL_RenderCopy(graphics.renderer, comp.gameOverScoreTexture, nullptr, &scoreRect);
         }
+
+        // Hiển thị "Retry" với hiệu ứng nhấp nháy
         int retryW, retryH;
         SDL_QueryTexture(comp.retryTexture, nullptr, nullptr, &retryW, &retryH);
         comp.retryRect = {(SCREEN_WIDTH - retryW) / 2 - 100, SCREEN_HEIGHT / 2 + 20, retryW, retryH};
+        SDL_SetTextureAlphaMod(comp.retryTexture, comp.startAlpha);
         SDL_RenderCopy(graphics.renderer, comp.retryTexture, nullptr, &comp.retryRect);
+
+        // Hiển thị "Quit" với hiệu ứng nhấp nháy
         int exitW, exitH;
         SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
         comp.exitRect = {(SCREEN_WIDTH - exitW) / 2 + 100, SCREEN_HEIGHT / 2 + 20, exitW, exitH};
+        SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
         SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.exitRect);
     }
 
@@ -79,9 +112,39 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
 
 void gameLoop(Graphics& graphics, Resources& res, TextComponents& comp,
               vector<Bullet>& bullets, vector<Block>& blocks) {
+    const int MAX_STARS = 7;
+    int fixedPositions[][2] = {
+        {100, 100}, {500, 150}, {900, 200}, {200, 300}, {600, 105}, {800, 260}, {300, 370}
+    };
+
+    if (comp.stars.empty() && comp.gameState == 0) {
+        for (int i = 0; i < MAX_STARS; ++i) {
+            Star newStar;
+            newStar.rect.x = fixedPositions[i][0];
+            newStar.rect.y = fixedPositions[i][1];
+            newStar.rect.w = 32;
+            newStar.rect.h = 32;
+            newStar.active = true;
+            newStar.frameCounter = 0;
+            newStar.currentFrame = 0;
+            comp.stars.push_back(newStar);
+        }
+    }
+
     while (!quit) {
-        play(bullets, res.bulletTexture, res.gunSound, comp.gameState, comp.retryRect, comp.exitRect, blocks, score, blockSpeed, frameCount, manX, manY, manSpeedX, manSpeedY);
+        play(bullets, res.bulletTexture, res.gunSound, comp.gameState, comp.retryRect, comp.exitRect, blocks, score, blockSpeed, frameCount, manX, manY, manSpeedX, manSpeedY, comp.startRect, comp.startScreenExitRect);
         updateGameState(comp, res, graphics, bullets, blocks);
+        if (comp.gameState == 0) {
+            for (auto& star : comp.stars) {
+                if (star.active) {
+                    star.frameCounter++;
+                    if (star.frameCounter >= 10) {
+                        star.currentFrame = (star.currentFrame + 1) % STAR_FRAMES;
+                        star.frameCounter = 0;
+                    }
+                }
+            }
+        }
         renderGame(graphics, res.backgroundTexture, bullets, blocks, comp);
         SDL_Delay(55);
     }

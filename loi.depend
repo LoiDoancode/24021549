@@ -51,7 +51,7 @@
 	"block.h"
 	"bullets.h"
 
-1745509259 source:d:\24021549\sdl.cpp
+1746272105 source:d:\24021549\sdl.cpp
 	<iostream>
 	<vector>
 	<cstdlib>
@@ -75,13 +75,13 @@
 	"game_state.h"
 	"render.h"
 
-1745468027 d:\24021549\graphics.h
+1746272105 d:\24021549\graphics.h
 	<SDL.h>
 	<SDL_image.h>
 	"defs.h"
 	<vector>
 
-1745760244 d:\24021549\defs.h
+1746327945 d:\24021549\defs.h
 
 1744118344 d:\24021549\bullets.h
 	"graphics.h"
@@ -89,9 +89,9 @@
 
 1744118423 d:\24021549\block.h
 
-1744777182 d:\24021549\check.h
+1746272105 d:\24021549\check.h
 
-1745372609 d:\24021549\play.h
+1746369839 d:\24021549\play.h
 	"defs.h"
 	"graphics.h"
 	<SDL.h>
@@ -101,38 +101,39 @@
 	"block.h"
 	"reset.h"
 
-1744252464 d:\24021549\initialize.h
+1746272105 d:\24021549\initialize.h
 
-1744252791 d:\24021549\quit.h
+1746272105 d:\24021549\quit.h
 
-1745466421 d:\24021549\playb.h
+1746272105 d:\24021549\playb.h
 	"block.h"
 	"bullets.h"
 	"check.h"
 	<SDL_mixer.h>
 
-1745464585 d:\24021549\reset.h
+1746272105 d:\24021549\reset.h
 	"block.h"
 	"bullets.h"
 
 1745468038 source:d:\24021549\initgraphics.h
 	"graphics.h"
 
-1745509279 d:\24021549\text_init.h
+1746369814 d:\24021549\text_init.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
+	<vector>
 	"graphics.h"
 	"defs.h"
 
-1745508361 d:\24021549\resource_init.h
+1746272105 d:\24021549\resource_init.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 	"graphics.h"
 
-1745509288 d:\24021549\cleanup.h
+1746337232 d:\24021549\cleanup.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
@@ -141,7 +142,7 @@
 	"resource_init.h"
 	"text_init.h"
 
-1745508645 d:\24021549\game_state.h
+1746369847 d:\24021549\game_state.h
 	<SDL.h>
 	<SDL_ttf.h>
 	"graphics.h"
@@ -152,7 +153,7 @@
 	"text_init.h"
 	"initialize.h"
 
-1745509309 d:\24021549\render.h
+1746370042 d:\24021549\render.h
 	<SDL.h>
 	"graphics.h"
 	"bullets.h"
@@ -162,4 +163,5 @@
 	"resource_init.h"
 	"text_init.h"
 	"initialize.h"
+	"defs.h"
 

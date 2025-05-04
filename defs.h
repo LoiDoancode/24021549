@@ -15,6 +15,7 @@ const int MAN_CLIPS[][4] = {
     { 395,10, 300, 340},
    };
 const int MAN_FRAMES = sizeof(MAN_CLIPS)/sizeof(int)/4;
+
 const char* RECTS= "skulls.png";
 const int RECTS_CLIPs[][4]={
 {0,0,800,760},
@@ -30,4 +31,9 @@ const int BULLETS_CLIPs[][4]={
     {1360,140,80,170}
 };
 const int BULLETS_FRAMES= sizeof(BULLETS_CLIPs)/sizeof(int)/4;
+const int STAR_FRAMES = 2;
+const SDL_Rect STAR_CLIPS[] = {
+    {0, 0, 600, 600},  // Frame 1: Ngôi sao lớn
+    {600, 0, 600, 600}  // Frame 2: Ngôi sao nhỏ
+};
 #endif

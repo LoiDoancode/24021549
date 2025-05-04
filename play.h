@@ -12,9 +12,9 @@ using namespace std;
 
 void resetGame(vector<Bullet>& bullets, vector<Block>& blocks, int& score, int& blockSpeed, int& frameCount, int& manX, int& manY, int& manSpeedX, int& manSpeedY);
 
-void play(vector<Bullet>&bullets, SDL_Texture* bulletTexture, Mix_Chunk* gunSound, int& gameState,
+void play(vector<Bullet>& bullets, SDL_Texture* bulletTexture, Mix_Chunk* gunSound, int& gameState,
           SDL_Rect& retryRect, SDL_Rect& exitRect, vector<Block>& blocks, int& score, int& blockSpeed,
-          int& frameCount, int& manX, int& manY, int& manSpeedX, int& manSpeedY) {
+          int& frameCount, int& manX, int& manY, int& manSpeedX, int& manSpeedY, SDL_Rect& startRect, SDL_Rect& startScreenExitRect) {
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
             quit = true;
@@ -23,7 +23,14 @@ void play(vector<Bullet>&bullets, SDL_Texture* bulletTexture, Mix_Chunk* gunSoun
             int x, y;
             SDL_GetMouseState(&x, &y);
             if (gameState == 0) {
-                gameState = 1;
+                if (x >= startRect.x && x <= startRect.x + startRect.w &&
+                    y >= startRect.y && y <= startRect.y + startRect.h) {
+                    gameState = 1; // Chuyển sang trạng thái chơi
+                }
+                if (x >= startScreenExitRect.x && x <= startScreenExitRect.x + startScreenExitRect.w &&
+                    y >= startScreenExitRect.y && y <= startScreenExitRect.y + startScreenExitRect.h) {
+                    quit = true; // Thoát game
+                }
             }
             else if (gameState == 2) {
                 if (x >= retryRect.x && x <= retryRect.x + retryRect.w &&
