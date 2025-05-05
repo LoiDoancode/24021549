@@ -18,8 +18,8 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
     SDL_Rect backgroundRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(graphics.renderer, backgroundTexture, nullptr, &backgroundRect);
 
-    // Cập nhật alpha để tạo hiệu ứng nhấp nháy cho "Start", "Quit", và "Retry"
-    if (comp.gameState == 0 || comp.gameState == 2) {
+    // Cập nhật alpha để tạo hiệu ứng nhấp nháy cho "Start", "Quit", "Retry", và "Continue"
+    if (comp.gameState == 0 || comp.gameState == 2 || comp.gameState == 3) {
         if (comp.alphaIncreasing) {
             comp.startAlpha += 5;
             if (comp.startAlpha >= 255) {
@@ -56,6 +56,14 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
         SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
         SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.startScreenExitRect);
 
+        // Hiển thị Best Score dưới "Quit"
+        if (comp.bestScoreTexture) {
+            int bestW, bestH;
+            SDL_QueryTexture(comp.bestScoreTexture, nullptr, nullptr, &bestW, &bestH);
+            SDL_Rect bestRect = {(SCREEN_WIDTH - bestW) / 2, (SCREEN_HEIGHT - bestH) / 2 + texH + exitH + 40, bestW, bestH};
+            SDL_RenderCopy(graphics.renderer, comp.bestScoreTexture, nullptr, &bestRect);
+        }
+
         // Vẽ các ngôi sao với animation
         for (auto& star : comp.stars) {
             if (star.active) {
@@ -82,6 +90,14 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
             SDL_Rect scoreRect = {10, 10, texW, texH};
             SDL_RenderCopy(graphics.renderer, comp.scoreTexture, nullptr, &scoreRect);
         }
+
+        // Hiển thị Best Score dưới điểm số hiện tại
+        if (comp.bestScoreTexture) {
+            int bestW, bestH;
+            SDL_QueryTexture(comp.bestScoreTexture, nullptr, nullptr, &bestW, &bestH);
+            SDL_Rect bestRect = {10, 40, bestW, bestH};
+            SDL_RenderCopy(graphics.renderer, comp.bestScoreTexture, nullptr, &bestRect);
+        }
     }
     else if (comp.gameState == 2) { // Trạng thái Game Over
         // Hiển thị điểm số
@@ -90,6 +106,14 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
             SDL_QueryTexture(comp.gameOverScoreTexture, nullptr, nullptr, &texW, &texH);
             SDL_Rect scoreRect = {(SCREEN_WIDTH - texW) / 2, SCREEN_HEIGHT / 2 - 50, texW, texH};
             SDL_RenderCopy(graphics.renderer, comp.gameOverScoreTexture, nullptr, &scoreRect);
+        }
+
+        // Hiển thị Best Score dưới điểm số
+        if (comp.bestScoreTexture) {
+            int bestW, bestH;
+            SDL_QueryTexture(comp.bestScoreTexture, nullptr, nullptr, &bestW, &bestH);
+            SDL_Rect bestRect = {(SCREEN_WIDTH - bestW) / 2, SCREEN_HEIGHT / 2 - 20, bestW, bestH};
+            SDL_RenderCopy(graphics.renderer, comp.bestScoreTexture, nullptr, &bestRect);
         }
 
         // Hiển thị "Retry" với hiệu ứng nhấp nháy
@@ -103,6 +127,21 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
         int exitW, exitH;
         SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
         comp.exitRect = {(SCREEN_WIDTH - exitW) / 2 + 100, SCREEN_HEIGHT / 2 + 20, exitW, exitH};
+        SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
+        SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.exitRect);
+    }
+    else if (comp.gameState == 3) { // Trạng thái Pause
+        // Hiển thị "Continue" với hiệu ứng nhấp nháy
+        int continueW, continueH;
+        SDL_QueryTexture(comp.continueTexture, nullptr, nullptr, &continueW, &continueH);
+        comp.continueRect = {(SCREEN_WIDTH - continueW) / 2 - 100, SCREEN_HEIGHT / 2, continueW, continueH};
+        SDL_SetTextureAlphaMod(comp.continueTexture, comp.startAlpha);
+        SDL_RenderCopy(graphics.renderer, comp.continueTexture, nullptr, &comp.continueRect);
+
+        // Hiển thị "Quit" với hiệu ứng nhấp nháy
+        int exitW, exitH;
+        SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
+        comp.exitRect = {(SCREEN_WIDTH - exitW) / 2 + 100, SCREEN_HEIGHT / 2, exitW, exitH};
         SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
         SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.exitRect);
     }
@@ -132,7 +171,7 @@ void gameLoop(Graphics& graphics, Resources& res, TextComponents& comp,
     }
 
     while (!quit) {
-        play(bullets, res.bulletTexture, res.gunSound, comp.gameState, comp.retryRect, comp.exitRect, blocks, score, blockSpeed, frameCount, manX, manY, manSpeedX, manSpeedY, comp.startRect, comp.startScreenExitRect);
+        play(bullets, res.bulletTexture, res.gunSound, comp.gameState, comp.retryRect, comp.exitRect, blocks, score, blockSpeed, frameCount, manX, manY, manSpeedX, manSpeedY, comp.startRect, comp.startScreenExitRect, comp.continueRect);
         updateGameState(comp, res, graphics, bullets, blocks);
         if (comp.gameState == 0) {
             for (auto& star : comp.stars) {

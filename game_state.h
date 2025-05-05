@@ -9,6 +9,7 @@
 #include "resource_init.h"
 #include "text_init.h"
 #include "initialize.h"
+#include <fstream>
 using namespace std;
 
 void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
@@ -30,6 +31,31 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
                 SDL_FreeSurface(textSurface);
             }
             comp.lastScore = score;
+
+            // Cập nhật Best Score nếu score hiện tại cao hơn
+            if (score > comp.bestScore) {
+                comp.bestScore = score;
+                if (comp.bestScoreTexture) {
+                    SDL_DestroyTexture(comp.bestScoreTexture);
+                }
+                string bestScoreText = "Best Score: " + to_string(comp.bestScore);
+                SDL_Surface* bestScoreSurface = TTF_RenderText_Solid(res.font, bestScoreText.c_str(), comp.textColor);
+                if (!bestScoreSurface) {
+                    SDL_Log("Unable to render best score text surface! TTF_Error: %s", TTF_GetError());
+                } else {
+                    comp.bestScoreTexture = SDL_CreateTextureFromSurface(graphics.renderer, bestScoreSurface);
+                    SDL_FreeSurface(bestScoreSurface);
+                }
+
+                // Ghi Best Score vào file
+                std::ofstream outFile("best_score.txt");
+                if (outFile.is_open()) {
+                    outFile << comp.bestScore;
+                    outFile.close();
+                } else {
+                    SDL_Log("Unable to write best score to file!");
+                }
+            }
         }
     }
     else if (comp.gameState == 2) {
@@ -45,5 +71,6 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
             SDL_FreeSurface(textSurface);
         }
     }
+    // gameState == 3 (Pause): Không cập nhật gameplay
 }
 #endif

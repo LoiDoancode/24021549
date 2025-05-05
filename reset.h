@@ -3,7 +3,8 @@
 #include "block.h"
 #include "bullets.h"
 using namespace std;
-    void resetGame(vector<Bullet>& bullets, vector<Block>& blocks, int& score, int& blockSpeed, int& frameCount, int& manX, int& manY, int& manSpeedX, int& manSpeedY) {
+
+void resetGame(vector<Bullet>& bullets, vector<Block>& blocks, int& score, int& blockSpeed, int& frameCount, int& manX, int& manY, int& manSpeedX, int& manSpeedY) {
     bullets.clear();
     blocks.clear();
     score = 0;
