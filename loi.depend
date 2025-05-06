@@ -81,7 +81,7 @@
 	"defs.h"
 	<vector>
 
-1746510688 d:\24021549\defs.h
+1746513206 d:\24021549\defs.h
 
 1746500361 d:\24021549\bullets.h
 	"graphics.h"
@@ -89,7 +89,7 @@
 
 1746502062 d:\24021549\block.h
 
-1746272105 d:\24021549\check.h
+1746513596 d:\24021549\check.h
 
 1746457133 d:\24021549\play.h
 	"defs.h"
@@ -101,14 +101,14 @@
 	"block.h"
 	"reset.h"
 
-1746510395 d:\24021549\initialize.h
+1746513088 d:\24021549\initialize.h
 	<vector>
 	"gift.h"
 	"defs.h"
 
 1746272105 d:\24021549\quit.h
 
-1746272105 d:\24021549\playb.h
+1746513569 d:\24021549\playb.h
 	"block.h"
 	"bullets.h"
 	"check.h"
@@ -147,7 +147,7 @@
 	"resource_init.h"
 	"text_init.h"
 
-1746510402 d:\24021549\game_state.h
+1746513080 d:\24021549\game_state.h
 	<SDL.h>
 	<SDL_ttf.h>
 	"graphics.h"
@@ -172,7 +172,7 @@
 	"initialize.h"
 	"gift.h"
 
-1746509888 d:\24021549\gift.h
+1746513978 d:\24021549\gift.h
 	<SDL.h>
 	<random>
 	"defs.h"
