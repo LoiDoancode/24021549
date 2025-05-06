@@ -28,7 +28,7 @@ struct Gift {
     }
 
     SDL_Rect getRect() const {
-        return {x, y, GIFT_WIDTH-20, GIFT_HEIGHT-10};
+        return {x, y, GIFT_WIDTH-17, GIFT_HEIGHT-20};
     }
 };
 
@@ -40,7 +40,7 @@ void createGift(std::vector<Gift>& gifts, SDL_Texture* giftTexture) {
     static std::uniform_real_distribution<> disChance(0.0, 1.0);
 
     // Giảm xác suất xuất hiện gift xuống 0.2% mỗi frame
-    if (disChance(gen) < 0.006) {
+    if (disChance(gen) < 0.026) {
         int x = disX(gen);
         gifts.emplace_back(x, -GIFT_HEIGHT, giftTexture);
     }
