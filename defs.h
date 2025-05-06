@@ -13,27 +13,34 @@ const int MAN_CLIPS[][4] = {
     { 1075, 10, 300, 340 },
     { 734, 10, 300, 340 },
     { 395,10, 300, 340},
-   };
+};
 const int MAN_FRAMES = sizeof(MAN_CLIPS)/sizeof(int)/4;
 
 const char* RECTS= "skulls.png";
 const int RECTS_CLIPs[][4]={
-{0,0,800,760},
-{800,0,800,760}
+{165,25,485,485},
+{965,25,485,485}
 };
 const int RECTS_FRAMES= sizeof(RECTS_CLIPs)/sizeof(int)/4;
 
-const char* BULLETS= "butletP.png";
+const char* BULLETS= "bullet.png";
 const int BULLETS_CLIPs[][4]={
-    {160,140,80,170},
-    {560,140,80,170},
-    {960,140,80,170},
-    {1360,140,80,170}
+    {165,140,65,170},
+    {565,140,65,170},
+    {965,140,65,170},
+    {1365,140,65,170}
 };
 const int BULLETS_FRAMES= sizeof(BULLETS_CLIPs)/sizeof(int)/4;
+
+const char* GIFT_FILE = "gift.png"; // File ảnh cho Gift
+const int GIFT_WIDTH = 50; // Kích thước Gift
+const int GIFT_HEIGHT = 50;
+const int GIFT_SPEED = 3; // Tốc độ di chuyển xuống của Gift
+
 const int STAR_FRAMES = 2;
 const SDL_Rect STAR_CLIPS[] = {
     {0, 0, 600, 600},  // Frame 1: Ngôi sao lớn
     {600, 0, 600, 600}  // Frame 2: Ngôi sao nhỏ
 };
+
 #endif

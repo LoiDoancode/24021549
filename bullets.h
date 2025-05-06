@@ -2,6 +2,7 @@
 #define _BULLETS__H
 #include "graphics.h"
 #include "defs.h"
+
 struct Bullet {
     int x, y;
     int speed = 10;
@@ -24,5 +25,11 @@ struct Bullet {
         SDL_Rect dest = {x, y, width, height};
         SDL_RenderCopy(renderer, texture, &clip, &dest);
     }
+
+    // Thêm hàm getRect để trả về vùng hình chữ nhật của viên đạn
+    SDL_Rect getRect() const {
+        return {x, y, width, height};
+    }
 };
+
 #endif

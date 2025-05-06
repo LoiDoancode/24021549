@@ -2,7 +2,7 @@
 #define _BLOCK__H
 struct Block {
     int x, y;
-    int width = 50, height = 50;
+    int width = 31, height = 31;
     int speed;
     bool active = true;
     SDL_Texture* texture;

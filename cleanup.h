@@ -13,6 +13,8 @@ void cleanupResources(Graphics& graphics, Resources& res, TextComponents& comp) 
     Mix_FreeChunk(res.gunSound);
     Mix_FreeChunk(res.popSound);
     Mix_FreeMusic(res.bgMusic);
+    Mix_FreeChunk(comp.rewardSound); // Hủy âm thanh reward
+    Mix_FreeChunk(comp.endSound); // Hủy âm thanh end
 
     if (comp.scoreTexture) {
         SDL_DestroyTexture(comp.scoreTexture);
@@ -40,6 +42,9 @@ void cleanupResources(Graphics& graphics, Resources& res, TextComponents& comp) 
     }
     if (comp.bestScoreTexture) {
         SDL_DestroyTexture(comp.bestScoreTexture);
+    }
+    if (comp.giftTexture) {
+        SDL_DestroyTexture(comp.giftTexture);
     }
     Mix_CloseAudio();
     TTF_CloseFont(res.font);

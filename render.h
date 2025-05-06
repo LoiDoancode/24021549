@@ -9,7 +9,7 @@
 #include "resource_init.h"
 #include "text_init.h"
 #include "initialize.h"
-#include "defs.h"
+#include "gift.h"
 using namespace std;
 
 void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bullet>& bullets,
@@ -82,6 +82,9 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
         }
         for (auto &block : blocks) {
             block.render(graphics.renderer);
+        }
+        for (auto &gift : gifts) {
+            gift.render(graphics.renderer);
         }
 
         if (comp.scoreTexture) {

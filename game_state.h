@@ -9,6 +9,7 @@
 #include "resource_init.h"
 #include "text_init.h"
 #include "initialize.h"
+#include "gift.h"
 #include <fstream>
 using namespace std;
 
@@ -17,6 +18,54 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
     if (comp.gameState == 1) {
         comp.man.tick();
         playb(bullets, blocks, res.blockTexture, res.popSound, comp.gameState);
+
+        // Tạo gift ngẫu nhiên
+        createGift(gifts, comp.giftTexture);
+
+        // Cập nhật vị trí gift
+        for (auto it = gifts.begin(); it != gifts.end();) {
+            it->update();
+            if (!it->active) {
+                it = gifts.erase(it);
+            } else {
+                ++it;
+            }
+        }
+
+        // Kiểm tra va chạm giữa đạn và gift
+        for (auto bulletIt = bullets.begin(); bulletIt != bullets.end();) {
+            bool bulletRemoved = false;
+            for (auto giftIt = gifts.begin(); giftIt != gifts.end() && !bulletRemoved;) {
+                SDL_Rect bulletRect = bulletIt->getRect();
+                SDL_Rect giftRect = giftIt->getRect();
+                if (SDL_HasIntersection(&bulletRect, &giftRect)) {
+                    giftIt->active = false; // Xóa gift
+                    bulletIt = bullets.erase(bulletIt); // Xóa đạn
+                    speed += 1; // Tăng tốc độ tàu
+                    Mix_PlayChannel(-1, comp.rewardSound, 0); // Phát âm thanh
+                    bulletRemoved = true;
+                } else {
+                    ++giftIt;
+                }
+            }
+            if (!bulletRemoved) {
+                ++bulletIt;
+            }
+        }
+
+        // Kiểm tra va chạm giữa tàu và gift
+        SDL_Rect manRect = getManRect();
+        for (auto giftIt = gifts.begin(); giftIt != gifts.end();) {
+            SDL_Rect giftRect = giftIt->getRect();
+            if (SDL_HasIntersection(&manRect, &giftRect)) {
+                giftIt->active = false; // Xóa gift
+                speed += 1; // Tăng tốc độ tàu
+                Mix_PlayChannel(-1, comp.rewardSound, 0); // Phát âm thanh
+                giftIt = gifts.erase(giftIt);
+            } else {
+                ++giftIt;
+            }
+        }
 
         if (score != comp.lastScore) {
             if (comp.scoreTexture) {
@@ -59,6 +108,12 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
         }
     }
     else if (comp.gameState == 2) {
+        // Phát âm thanh khi vào trạng thái Game Over
+        if (!playedEndSound) {
+            Mix_PlayChannel(-1, comp.endSound, 0);
+            playedEndSound = true;
+        }
+
         if (comp.gameOverScoreTexture) {
             SDL_DestroyTexture(comp.gameOverScoreTexture);
         }

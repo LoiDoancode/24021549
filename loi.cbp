@@ -39,6 +39,7 @@
 		<Unit filename="cleanup.h" />
 		<Unit filename="defs.h" />
 		<Unit filename="game_state.h" />
+		<Unit filename="gift.h" />
 		<Unit filename="graphics.h" />
 		<Unit filename="init.h" />
 		<Unit filename="initialize.h" />

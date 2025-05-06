@@ -26,6 +26,9 @@ struct TextComponents {
     SDL_Texture* starsTexture = nullptr;
     SDL_Texture* continueTexture = nullptr;
     SDL_Texture* bestScoreTexture = nullptr;
+    SDL_Texture* giftTexture = nullptr;
+    Mix_Chunk* rewardSound = nullptr; // Âm thanh khi trúng gift
+    Mix_Chunk* endSound = nullptr; // Âm thanh khi thua
     SDL_Color textColor = {255, 255, 255, 255};
     int lastScore = -1;
     int bestScore = 0;
@@ -47,7 +50,7 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         inFile >> comp.bestScore;
         inFile.close();
     } else {
-        comp.bestScore = 0; // Mặc định nếu file không tồn tại
+        comp.bestScore = 0;
     }
 
     comp.man.init(manTexture, MAN_FRAMES, MAN_CLIPS);
@@ -226,7 +229,81 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         return false;
     }
 
-    // Khởi tạo bestScoreTexture dựa trên bestScore đọc từ file
+    SDL_Surface* giftSurface = IMG_Load(GIFT_FILE);
+    if (!giftSurface) {
+        SDL_Log("Unable to load gift.png! SDL_Error: %s", IMG_GetError());
+        SDL_DestroyTexture(comp.startTexture);
+        SDL_DestroyTexture(comp.titleTexture);
+        SDL_DestroyTexture(comp.starsTexture);
+        SDL_DestroyTexture(comp.retryTexture);
+        SDL_DestroyTexture(comp.exitTexture);
+        SDL_DestroyTexture(comp.continueTexture);
+        Mix_FreeChunk(gunSound);
+        Mix_FreeChunk(popSound);
+        Mix_FreeMusic(bgMusic);
+        TTF_CloseFont(font);
+        Mix_CloseAudio();
+        TTF_Quit();
+        return false;
+    }
+    comp.giftTexture = SDL_CreateTextureFromSurface(renderer, giftSurface);
+    SDL_FreeSurface(giftSurface);
+    if (!comp.giftTexture) {
+        SDL_Log("Unable to create gift texture! SDL_Error: %s", SDL_GetError());
+        SDL_DestroyTexture(comp.startTexture);
+        SDL_DestroyTexture(comp.titleTexture);
+        SDL_DestroyTexture(comp.starsTexture);
+        SDL_DestroyTexture(comp.retryTexture);
+        SDL_DestroyTexture(comp.exitTexture);
+        SDL_DestroyTexture(comp.continueTexture);
+        Mix_FreeChunk(gunSound);
+        Mix_FreeChunk(popSound);
+        Mix_FreeMusic(bgMusic);
+        TTF_CloseFont(font);
+        Mix_CloseAudio();
+        TTF_Quit();
+        return false;
+    }
+
+    comp.rewardSound = Mix_LoadWAV("reward.mp3");
+    if (!comp.rewardSound) {
+        SDL_Log("Unable to load reward.mp3! SDL_Error: %s", Mix_GetError());
+        SDL_DestroyTexture(comp.startTexture);
+        SDL_DestroyTexture(comp.titleTexture);
+        SDL_DestroyTexture(comp.starsTexture);
+        SDL_DestroyTexture(comp.retryTexture);
+        SDL_DestroyTexture(comp.exitTexture);
+        SDL_DestroyTexture(comp.continueTexture);
+        SDL_DestroyTexture(comp.giftTexture);
+        Mix_FreeChunk(gunSound);
+        Mix_FreeChunk(popSound);
+        Mix_FreeMusic(bgMusic);
+        TTF_CloseFont(font);
+        Mix_CloseAudio();
+        TTF_Quit();
+        return false;
+    }
+
+    comp.endSound = Mix_LoadWAV("end.mp3");
+    if (!comp.endSound) {
+        SDL_Log("Unable to load end.mp3! SDL_Error: %s", Mix_GetError());
+        SDL_DestroyTexture(comp.startTexture);
+        SDL_DestroyTexture(comp.titleTexture);
+        SDL_DestroyTexture(comp.starsTexture);
+        SDL_DestroyTexture(comp.retryTexture);
+        SDL_DestroyTexture(comp.exitTexture);
+        SDL_DestroyTexture(comp.continueTexture);
+        SDL_DestroyTexture(comp.giftTexture);
+        Mix_FreeChunk(comp.rewardSound);
+        Mix_FreeChunk(gunSound);
+        Mix_FreeChunk(popSound);
+        Mix_FreeMusic(bgMusic);
+        TTF_CloseFont(font);
+        Mix_CloseAudio();
+        TTF_Quit();
+        return false;
+    }
+
     string bestScoreText = "Best Score: " + to_string(comp.bestScore);
     SDL_Surface* bestScoreSurface = TTF_RenderText_Solid(font, bestScoreText.c_str(), comp.textColor);
     if (!bestScoreSurface) {
@@ -237,6 +314,9 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         SDL_DestroyTexture(comp.retryTexture);
         SDL_DestroyTexture(comp.exitTexture);
         SDL_DestroyTexture(comp.continueTexture);
+        SDL_DestroyTexture(comp.giftTexture);
+        Mix_FreeChunk(comp.rewardSound);
+        Mix_FreeChunk(comp.endSound);
         Mix_FreeChunk(gunSound);
         Mix_FreeChunk(popSound);
         Mix_FreeMusic(bgMusic);
@@ -255,6 +335,9 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         SDL_DestroyTexture(comp.retryTexture);
         SDL_DestroyTexture(comp.exitTexture);
         SDL_DestroyTexture(comp.continueTexture);
+        SDL_DestroyTexture(comp.giftTexture);
+        Mix_FreeChunk(comp.rewardSound);
+        Mix_FreeChunk(comp.endSound);
         Mix_FreeChunk(gunSound);
         Mix_FreeChunk(popSound);
         Mix_FreeMusic(bgMusic);
