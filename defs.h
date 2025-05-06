@@ -7,12 +7,12 @@ const char* WINDOW_TITLE = "Hello World!";
 
 const char* MAN_SPRITE_FILE = "spaceship.png";
 const int MAN_CLIPS[][4] = {
-    { 50, 10, 300, 340 },
-    { 395,10, 300, 340},
-    { 734, 10, 300, 340 },
-    { 1075, 10, 300, 340 },
-    { 734, 10, 300, 340 },
-    { 395,10, 300, 340},
+    { 50, 10, 297, 340 },
+    { 395,10, 297, 340},
+    { 734, 10, 297, 340 },
+    { 1075, 10, 297, 340 },
+    { 734, 10, 297, 340 },
+    { 395,10, 297, 340},
 };
 const int MAN_FRAMES = sizeof(MAN_CLIPS)/sizeof(int)/4;
 
