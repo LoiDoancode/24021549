@@ -9,6 +9,7 @@
 struct Resources {
     TTF_Font* font = nullptr;
     SDL_Texture* bulletTexture = nullptr;
+    SDL_Texture* speedUpTexture = nullptr;
     SDL_Texture* manTexture = nullptr;
     SDL_Texture* blockTexture = nullptr;
     SDL_Texture* backgroundTexture = nullptr;
@@ -17,6 +18,7 @@ struct Resources {
     Mix_Chunk* popSound = nullptr;
 };
 bool initResources(Resources& res, Graphics& graphics) {
+
     if (TTF_Init() == -1) {
         SDL_Log("SDL_ttf could not initialize! TTF_Error: %s", TTF_GetError());
         graphics.quit();

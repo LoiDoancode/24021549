@@ -102,6 +102,10 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
                     bulletIt = bullets.erase(bulletIt); // Xóa đạn
                     speed += 1; // Tăng tốc độ tàu
                     Mix_PlayChannel(-1, comp.rewardSound, 0); // Phát âm thanh
+                    showSpeedText = true;
+                    speedTextStartTime = SDL_GetTicks();
+                    speedTextX = giftIt->x;
+                    speedTextY = giftIt->y - 20;
                     bulletRemoved = true;
                 } else {
                     ++giftIt;

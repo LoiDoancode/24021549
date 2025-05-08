@@ -46,6 +46,9 @@ void cleanupResources(Graphics& graphics, Resources& res, TextComponents& comp) 
     if (comp.giftTexture) {
         SDL_DestroyTexture(comp.giftTexture);
     }
+    if (comp.speedUpTexture) {
+    SDL_DestroyTexture(comp.speedUpTexture);
+}
     Mix_CloseAudio();
     TTF_CloseFont(res.font);
     TTF_Quit();

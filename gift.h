@@ -40,7 +40,7 @@ void createGift(std::vector<Gift>& gifts, SDL_Texture* giftTexture) {
     static std::uniform_real_distribution<> disChance(0.0, 1.0);
 
     // Giảm xác suất xuất hiện gift xuống 0.2% mỗi frame
-    if (disChance(gen) < 0.026) {
+    if (disChance(gen) < 0.005) {
         int x = disX(gen);
         gifts.emplace_back(x, -GIFT_HEIGHT, giftTexture);
     }

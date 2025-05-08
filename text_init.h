@@ -17,6 +17,7 @@ struct Star {
 
 struct TextComponents {
     Sprite man;
+    SDL_Texture* speedUpTexture = nullptr;
     SDL_Texture* scoreTexture = nullptr;
     SDL_Texture* startTexture = nullptr;
     SDL_Texture* gameOverScoreTexture = nullptr;
@@ -30,6 +31,15 @@ struct TextComponents {
     Mix_Chunk* rewardSound = nullptr; // Âm thanh khi trúng gift
     Mix_Chunk* endSound = nullptr; // Âm thanh khi thua
     SDL_Color textColor = {255, 255, 255, 255};
+    TTF_Font* font = nullptr;
+
+    float startScale = 1.0f;
+    float retryScale = 1.0f;
+    float continueScale = 1.0f;
+    float exitScale = 1.0f;
+
+    const float HOVER_SCALE = 1.2f;
+    const float SCALE_SPEED = 0.1f;
     int lastScore = -1;
     int bestScore = 0;
     int gameState = 0; // 0: Start, 1: Playing, 2: Game Over, 3: Pause
@@ -45,6 +55,18 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
                         SDL_Texture* manTexture, Mix_Chunk* gunSound, Mix_Chunk* popSound,
                         Mix_Music* bgMusic) {
     // Đọc Best Score từ file
+    comp.font = font;
+
+    // Tạo texture "+1 Speed"
+    SDL_Color textColor = {255, 255, 255, 255}; // Màu vàng
+    SDL_Surface* speedUpSurface = TTF_RenderText_Solid(font, "+1 Speed", textColor);
+    if (!speedUpSurface) {
+        SDL_Log("Failed to render +1 speed text: %s", TTF_GetError());
+        return false;
+    } else {
+        comp.speedUpTexture = SDL_CreateTextureFromSurface(renderer, speedUpSurface);
+        SDL_FreeSurface(speedUpSurface);
+    }
     std::ifstream inFile("best_score.txt");
     if (inFile.is_open()) {
         inFile >> comp.bestScore;

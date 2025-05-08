@@ -86,6 +86,17 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
         for (auto &gift : gifts) {
             gift.render(graphics.renderer);
         }
+        if (showSpeedText && comp.speedUpTexture) {
+        Uint32 currentTime = SDL_GetTicks();
+        if (currentTime - speedTextStartTime < SPEED_TEXT_DURATION) {
+            int texW, texH;
+            SDL_QueryTexture(comp.speedUpTexture, nullptr, nullptr, &texW, &texH);
+            SDL_Rect textRect = {speedTextX, speedTextY, texW, texH};
+            SDL_RenderCopy(graphics.renderer, comp.speedUpTexture, nullptr, &textRect);
+        } else {
+            showSpeedText = false;
+        }
+    }
 
         if (comp.scoreTexture) {
             int texW, texH;

@@ -20,5 +20,14 @@ std::vector<Gift> gifts; // Vector lưu trữ các gift
 SDL_Rect getManRect() {
     return {manX, manY, MAN_CLIPS[0][2], MAN_CLIPS[0][3]}; // Kích thước từ MAN_CLIPS: 300x340
 }
-
+// initialize.h
+float scale = 1.0f;
+float scaleDirection = 0.02f; // Tốc độ thay đổi kích thước
+const float MIN_SCALE = 0.95f;
+const float MAX_SCALE = 1.15f;
+bool showSpeedText = false;
+Uint32 speedTextStartTime = 0;
+const Uint32 SPEED_TEXT_DURATION = 500; // Thời gian hiển thị (ms)
+int speedTextX = 0, speedTextY = 0;
+// Thêm vào phần biến toàn cục
 #endif
