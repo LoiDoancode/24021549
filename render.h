@@ -18,22 +18,17 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
     SDL_Rect backgroundRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(graphics.renderer, backgroundTexture, nullptr, &backgroundRect);
 
-    // Cập nhật alpha để tạo hiệu ứng nhấp nháy cho "Start", "Quit", "Retry", và "Continue"
-    if (comp.gameState == 0 || comp.gameState == 2 || comp.gameState == 3) {
-        if (comp.alphaIncreasing) {
-            comp.startAlpha += 5;
-            if (comp.startAlpha >= 255) {
-                comp.startAlpha = 255;
-                comp.alphaIncreasing = false;
-            }
-        } else {
-            comp.startAlpha -= 5;
-            if (comp.startAlpha <= 100) {
-                comp.startAlpha = 100;
-                comp.alphaIncreasing = true;
-            }
-        }
-    }
+    // Lấy vị trí chuột
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    SDL_Point mousePoint = {mouseX, mouseY};
+
+    // Biến tĩnh để theo dõi trạng thái hover trước đó
+    static bool wasHoveringStart = false;
+    static bool wasHoveringExitStartScreen = false;
+    static bool wasHoveringRetry = false;
+    static bool wasHoveringExit = false;
+    static bool wasHoveringContinue = false;
 
     if (comp.gameState == 0) { // Trạng thái Start
         // Hiển thị tiêu đề "Space Shooter"
@@ -42,18 +37,28 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
         SDL_Rect titleRect = {(SCREEN_WIDTH - titleW) / 2, SCREEN_HEIGHT / 2 - 100, titleW, titleH};
         SDL_RenderCopy(graphics.renderer, comp.titleTexture, nullptr, &titleRect);
 
-        // Hiển thị "Start" với hiệu ứng nhấp nháy
+        // Hiển thị "Start" với hiệu ứng hover
         int texW, texH;
         SDL_QueryTexture(comp.startTexture, nullptr, nullptr, &texW, &texH);
         comp.startRect = {(SCREEN_WIDTH - texW) / 2, (SCREEN_HEIGHT - texH) / 2, texW, texH};
-        SDL_SetTextureAlphaMod(comp.startTexture, comp.startAlpha);
+        bool isHoveringStart = SDL_PointInRect(&mousePoint, &comp.startRect);
+        if (isHoveringStart && !wasHoveringStart && comp.clickSound) {
+            Mix_PlayChannel(-1, comp.clickSound, 0);
+        }
+        wasHoveringStart = isHoveringStart;
+        SDL_SetTextureAlphaMod(comp.startTexture, isHoveringStart ? 150 : 255);
         SDL_RenderCopy(graphics.renderer, comp.startTexture, nullptr, &comp.startRect);
 
-        // Hiển thị "Quit" với hiệu ứng nhấp nháy, ngay dưới "Start"
+        // Hiển thị "Quit" với hiệu ứng hover, ngay dưới "Start"
         int exitW, exitH;
         SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
         comp.startScreenExitRect = {(SCREEN_WIDTH - exitW) / 2, (SCREEN_HEIGHT - exitH) / 2 + texH + 20, exitW, exitH};
-        SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
+        bool isHoveringExitStartScreen = SDL_PointInRect(&mousePoint, &comp.startScreenExitRect);
+        if (isHoveringExitStartScreen && !wasHoveringExitStartScreen && comp.clickSound) {
+            Mix_PlayChannel(-1, comp.clickSound, 0);
+        }
+        wasHoveringExitStartScreen = isHoveringExitStartScreen;
+        SDL_SetTextureAlphaMod(comp.exitTexture, isHoveringExitStartScreen ? 150 : 255);
         SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.startScreenExitRect);
 
         // Hiển thị Best Score dưới "Quit"
@@ -87,16 +92,16 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
             gift.render(graphics.renderer);
         }
         if (showSpeedText && comp.speedUpTexture) {
-        Uint32 currentTime = SDL_GetTicks();
-        if (currentTime - speedTextStartTime < SPEED_TEXT_DURATION) {
-            int texW, texH;
-            SDL_QueryTexture(comp.speedUpTexture, nullptr, nullptr, &texW, &texH);
-            SDL_Rect textRect = {speedTextX, speedTextY, texW, texH};
-            SDL_RenderCopy(graphics.renderer, comp.speedUpTexture, nullptr, &textRect);
-        } else {
-            showSpeedText = false;
+            Uint32 currentTime = SDL_GetTicks();
+            if (currentTime - speedTextStartTime < SPEED_TEXT_DURATION) {
+                int texW, texH;
+                SDL_QueryTexture(comp.speedUpTexture, nullptr, nullptr, &texW, &texH);
+                SDL_Rect textRect = {speedTextX, speedTextY, texW, texH};
+                SDL_RenderCopy(graphics.renderer, comp.speedUpTexture, nullptr, &textRect);
+            } else {
+                showSpeedText = false;
+            }
         }
-    }
 
         if (comp.scoreTexture) {
             int texW, texH;
@@ -130,33 +135,53 @@ void renderGame(Graphics& graphics, SDL_Texture* backgroundTexture, vector<Bulle
             SDL_RenderCopy(graphics.renderer, comp.bestScoreTexture, nullptr, &bestRect);
         }
 
-        // Hiển thị "Retry" với hiệu ứng nhấp nháy
+        // Hiển thị "Retry" với hiệu ứng hover
         int retryW, retryH;
         SDL_QueryTexture(comp.retryTexture, nullptr, nullptr, &retryW, &retryH);
         comp.retryRect = {(SCREEN_WIDTH - retryW) / 2 - 100, SCREEN_HEIGHT / 2 + 20, retryW, retryH};
-        SDL_SetTextureAlphaMod(comp.retryTexture, comp.startAlpha);
+        bool isHoveringRetry = SDL_PointInRect(&mousePoint, &comp.retryRect);
+        if (isHoveringRetry && !wasHoveringRetry && comp.clickSound) {
+            Mix_PlayChannel(-1, comp.clickSound, 0);
+        }
+        wasHoveringRetry = isHoveringRetry;
+        SDL_SetTextureAlphaMod(comp.retryTexture, isHoveringRetry ? 150 : 255);
         SDL_RenderCopy(graphics.renderer, comp.retryTexture, nullptr, &comp.retryRect);
 
-        // Hiển thị "Quit" với hiệu ứng nhấp nháy
+        // Hiển thị "Quit" với hiệu ứng hover
         int exitW, exitH;
         SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
         comp.exitRect = {(SCREEN_WIDTH - exitW) / 2 + 100, SCREEN_HEIGHT / 2 + 20, exitW, exitH};
-        SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
+        bool isHoveringExit = SDL_PointInRect(&mousePoint, &comp.exitRect);
+        if (isHoveringExit && !wasHoveringExit && comp.clickSound) {
+            Mix_PlayChannel(-1, comp.clickSound, 0);
+        }
+        wasHoveringExit = isHoveringExit;
+        SDL_SetTextureAlphaMod(comp.exitTexture, isHoveringExit ? 150 : 255);
         SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.exitRect);
     }
     else if (comp.gameState == 3) { // Trạng thái Pause
-        // Hiển thị "Continue" với hiệu ứng nhấp nháy
+        // Hiển thị "Continue" với hiệu ứng hover
         int continueW, continueH;
         SDL_QueryTexture(comp.continueTexture, nullptr, nullptr, &continueW, &continueH);
         comp.continueRect = {(SCREEN_WIDTH - continueW) / 2 - 100, SCREEN_HEIGHT / 2, continueW, continueH};
-        SDL_SetTextureAlphaMod(comp.continueTexture, comp.startAlpha);
+        bool isHoveringContinue = SDL_PointInRect(&mousePoint, &comp.continueRect);
+        if (isHoveringContinue && !wasHoveringContinue && comp.clickSound) {
+            Mix_PlayChannel(-1, comp.clickSound, 0);
+        }
+        wasHoveringContinue = isHoveringContinue;
+        SDL_SetTextureAlphaMod(comp.continueTexture, isHoveringContinue ? 150 : 255);
         SDL_RenderCopy(graphics.renderer, comp.continueTexture, nullptr, &comp.continueRect);
 
-        // Hiển thị "Quit" với hiệu ứng nhấp nháy
+        // Hiển thị "Quit" với hiệu ứng hover
         int exitW, exitH;
         SDL_QueryTexture(comp.exitTexture, nullptr, nullptr, &exitW, &exitH);
         comp.exitRect = {(SCREEN_WIDTH - exitW) / 2 + 100, SCREEN_HEIGHT / 2, exitW, exitH};
-        SDL_SetTextureAlphaMod(comp.exitTexture, comp.startAlpha);
+        bool isHoveringExit = SDL_PointInRect(&mousePoint, &comp.exitRect);
+        if (isHoveringExit && !wasHoveringExit && comp.clickSound) {
+            Mix_PlayChannel(-1, comp.clickSound, 0);
+        }
+        wasHoveringExit = isHoveringExit;
+        SDL_SetTextureAlphaMod(comp.exitTexture, isHoveringExit ? 150 : 255);
         SDL_RenderCopy(graphics.renderer, comp.exitTexture, nullptr, &comp.exitRect);
     }
 

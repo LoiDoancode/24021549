@@ -30,6 +30,7 @@ struct TextComponents {
     SDL_Texture* giftTexture = nullptr;
     Mix_Chunk* rewardSound = nullptr; // Âm thanh khi trúng gift
     Mix_Chunk* endSound = nullptr; // Âm thanh khi thua
+    Mix_Chunk* clickSound = nullptr; // Âm thanh khi hover
     SDL_Color textColor = {255, 255, 255, 255};
     TTF_Font* font = nullptr;
 
@@ -58,7 +59,7 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
     comp.font = font;
 
     // Tạo texture "+1 Speed"
-    SDL_Color textColor = {255, 255, 255, 255}; // Màu vàng
+    SDL_Color textColor = {255, 255, 255, 255}; // Màu trắng
     SDL_Surface* speedUpSurface = TTF_RenderText_Solid(font, "+1 Speed", textColor);
     if (!speedUpSurface) {
         SDL_Log("Failed to render +1 speed text: %s", TTF_GetError());
@@ -326,6 +327,27 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         return false;
     }
 
+    comp.clickSound = Mix_LoadWAV("click.mp3");
+    if (!comp.clickSound) {
+        SDL_Log("Unable to load click.mp3! SDL_Error: %s", Mix_GetError());
+        SDL_DestroyTexture(comp.startTexture);
+        SDL_DestroyTexture(comp.titleTexture);
+        SDL_DestroyTexture(comp.starsTexture);
+        SDL_DestroyTexture(comp.retryTexture);
+        SDL_DestroyTexture(comp.exitTexture);
+        SDL_DestroyTexture(comp.continueTexture);
+        SDL_DestroyTexture(comp.giftTexture);
+        Mix_FreeChunk(comp.rewardSound);
+        Mix_FreeChunk(comp.endSound);
+        Mix_FreeChunk(gunSound);
+        Mix_FreeChunk(popSound);
+        Mix_FreeMusic(bgMusic);
+        TTF_CloseFont(font);
+        Mix_CloseAudio();
+        TTF_Quit();
+        return false;
+    }
+
     string bestScoreText = "Best Score: " + to_string(comp.bestScore);
     SDL_Surface* bestScoreSurface = TTF_RenderText_Solid(font, bestScoreText.c_str(), comp.textColor);
     if (!bestScoreSurface) {
@@ -339,6 +361,7 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         SDL_DestroyTexture(comp.giftTexture);
         Mix_FreeChunk(comp.rewardSound);
         Mix_FreeChunk(comp.endSound);
+        Mix_FreeChunk(comp.clickSound);
         Mix_FreeChunk(gunSound);
         Mix_FreeChunk(popSound);
         Mix_FreeMusic(bgMusic);
@@ -360,6 +383,7 @@ bool initTextComponents(TextComponents& comp, TTF_Font* font, SDL_Renderer* rend
         SDL_DestroyTexture(comp.giftTexture);
         Mix_FreeChunk(comp.rewardSound);
         Mix_FreeChunk(comp.endSound);
+        Mix_FreeChunk(comp.clickSound);
         Mix_FreeChunk(gunSound);
         Mix_FreeChunk(popSound);
         Mix_FreeMusic(bgMusic);

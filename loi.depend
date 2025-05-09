@@ -122,7 +122,7 @@
 1745468038 source:d:\24021549\initgraphics.h
 	"graphics.h"
 
-1746689018 d:\24021549\text_init.h
+1746756573 d:\24021549\text_init.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
@@ -160,7 +160,7 @@
 	"gift.h"
 	<fstream>
 
-1746691817 d:\24021549\render.h
+1746756581 d:\24021549\render.h
 	<SDL.h>
 	"graphics.h"
 	"bullets.h"
