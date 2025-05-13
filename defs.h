@@ -32,15 +32,15 @@ const int BULLETS_CLIPs[][4]={
 };
 const int BULLETS_FRAMES= sizeof(BULLETS_CLIPs)/sizeof(int)/4;
 
-const char* GIFT_FILE = "gift.png"; // File ảnh cho Gift
-const int GIFT_WIDTH = 50; // Kích thước Gift
+const char* GIFT_FILE = "gift.png";
+const int GIFT_WIDTH = 50;
 const int GIFT_HEIGHT = 50;
-const int GIFT_SPEED = 3; // Tốc độ di chuyển xuống của Gift
+const int GIFT_SPEED = 3;
 
 const int STAR_FRAMES = 2;
 const SDL_Rect STAR_CLIPS[] = {
-    {0, 0, 600, 600},  // Frame 1: Ngôi sao lớn
-    {600, 0, 600, 600}  // Frame 2: Ngôi sao nhỏ
+    {0, 0, 600, 600},
+    {600, 0, 600, 600}
 };
 
 #endif

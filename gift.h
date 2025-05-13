@@ -14,7 +14,7 @@ struct Gift {
     void update() {
         if (active) {
             y += GIFT_SPEED; // Di chuyển xuống
-            if (y > SCREEN_HEIGHT) {
+            if (y > SCREEN_HEIGHT + 200) {
                 active = false; // Xóa gift khi ra khỏi màn hình
             }
         }
@@ -28,7 +28,7 @@ struct Gift {
     }
 
     SDL_Rect getRect() const {
-        return {x, y, GIFT_WIDTH-17, GIFT_HEIGHT-20};
+        return {x, y, GIFT_WIDTH-10, GIFT_HEIGHT-20};
     }
 };
 
@@ -39,8 +39,7 @@ void createGift(std::vector<Gift>& gifts, SDL_Texture* giftTexture) {
     static std::uniform_int_distribution<> disX(50, SCREEN_WIDTH - GIFT_WIDTH-50);
     static std::uniform_real_distribution<> disChance(0.0, 1.0);
 
-    // Giảm xác suất xuất hiện gift xuống 0.2% mỗi frame
-    if (disChance(gen) < 0.005) {
+    if (disChance(gen) < 0.05) {
         int x = disX(gen);
         gifts.emplace_back(x, -GIFT_HEIGHT, giftTexture);
     }

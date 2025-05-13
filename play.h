@@ -86,7 +86,7 @@ void play(vector<Bullet>& bullets, SDL_Texture* bulletTexture, Mix_Chunk* gunSou
                         manSpeedY = 0;
                         break;
                     case SDLK_ESCAPE:
-                        gameState = 3; // Chuyển sang trạng thái Pause
+                        gameState = 3;
                         break;
                 }
             }

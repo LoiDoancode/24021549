@@ -1,6 +1,7 @@
 #ifndef _CHECK__H
 #define _CHECK__H
-
+#include "gift.h"
+#include "block.h"
 bool checkGameOver(const Block& block, int manX, int manY) {
 
     if(block.x < manX + 100 && block.x > manX + 20 && block.y < manY + 18 && block.y > manY - 15)
@@ -17,4 +18,5 @@ bool checkGameOver(const Block& block, int manX, int manY) {
     return false;
 
 }
+
 #endif

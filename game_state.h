@@ -12,66 +12,10 @@
 #include "gift.h"
 #include <fstream>
 using namespace std;
-
-// Kiểm tra điểm nằm trong hình chữ nhật
-bool PointInRect(SDL_FPoint p, SDL_FRect rect) {
-    return p.x >= rect.x && p.x <= rect.x + rect.w &&
-           p.y >= rect.y && p.y <= rect.y + rect.h;
-}
-
-// Tính diện tích tam giác
-float Area(SDL_FPoint a, SDL_FPoint b, SDL_FPoint c) {
-    return abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0f);
-}
-
-// Kiểm tra điểm nằm trong tam giác
-bool PointInTriangle(SDL_FPoint p, SDL_FPoint a, SDL_FPoint b, SDL_FPoint c) {
-    float A = Area(a, b, c);
-    float A1 = Area(p, b, c);
-    float A2 = Area(a, p, c);
-    float A3 = Area(a, b, p);
-    return abs(A - (A1 + A2 + A3)) < 0.0001f;
-}
-
-// Kiểm tra hai đoạn thẳng giao nhau
-bool LinesIntersect(SDL_FPoint a1, SDL_FPoint a2, SDL_FPoint b1, SDL_FPoint b2) {
-    float denom = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
-    if (abs(denom) < 0.0001f) return false; // Song song
-
-    float ua = ((b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x)) / denom;
-    float ub = ((a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x)) / denom;
-
-    return ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1;
-}
-
-// Kiểm tra va chạm tam giác-hình chữ nhật
-bool TriangleRectCollision(SDL_FPoint a, SDL_FPoint b, SDL_FPoint c, SDL_FRect rect) {
-    // B1: Đỉnh tam giác trong hình chữ nhật
-    if (PointInRect(a, rect) || PointInRect(b, rect) || PointInRect(c, rect))
-        return true;
-
-    // B2: Đỉnh hình chữ nhật trong tam giác
-    SDL_FPoint tl = {rect.x, rect.y};
-    SDL_FPoint tr = {rect.x + rect.w, rect.y};
-    SDL_FPoint br = {rect.x + rect.w, rect.y + rect.h};
-    SDL_FPoint bl = {rect.x, rect.y + rect.h};
-
-    if (PointInTriangle(tl, a, b, c) || PointInTriangle(tr, a, b, c) ||
-        PointInTriangle(br, a, b, c) || PointInTriangle(bl, a, b, c))
-        return true;
-
-    // B3: Kiểm tra cạnh cắt nhau
-    SDL_FPoint triEdges[3][2] = {{a, b}, {b, c}, {c, a}};
-    SDL_FPoint rectEdges[4][2] = {{tl, tr}, {tr, br}, {br, bl}, {bl, tl}};
-
-    for (int i = 0; i < 3; ++i)
-        for (int j = 0; j < 4; ++j)
-            if (LinesIntersect(triEdges[i][0], triEdges[i][1], rectEdges[j][0], rectEdges[j][1]))
-                return true;
-
+bool checkR(SDL_Rect a, SDL_Rect b){
+    if(a.x+120>=b.x && b.x>=a.x-30 && a.y <= b.y+10)return true;
     return false;
 }
-
 void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
                      vector<Bullet>& bullets, vector<Block>& blocks) {
     if (comp.gameState == 1) {
@@ -118,10 +62,15 @@ void updateGameState(TextComponents& comp, Resources& res, Graphics& graphics,
 
         // Kiểm tra va chạm giữa tàu và gift
         SDL_Rect manRect = getManRect();
+
         for (auto giftIt = gifts.begin(); giftIt != gifts.end();) {
             SDL_Rect giftRect = giftIt->getRect();
-            if (SDL_HasIntersection(&manRect, &giftRect)) {
+            if (checkR(manRect, giftRect)) {
                 giftIt->active = false; // Xóa gift
+                showSpeedText = true;
+                    speedTextStartTime = SDL_GetTicks();
+                    speedTextX = giftIt->x;
+                    speedTextY = giftIt->y - 20;
                 speed += 1; // Tăng tốc độ tàu
                 Mix_PlayChannel(-1, comp.rewardSound, 0); // Phát âm thanh
                 giftIt = gifts.erase(giftIt);
