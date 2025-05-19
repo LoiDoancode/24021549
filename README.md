@@ -45,6 +45,10 @@
   <p>file sdl: từ github của bài giảng trên lớp</p>
   <p>code: vận dụng kiến thức bản thân và tham khảo code từ AI</p>
 <div>
+ <div class="section">
+   <h2>Code</h2>
+  <p>Gồm 1 file main và 19 file headers</p>
+  
 <div class="section">
   <h2>Thuật toán xử lí va chạm</h2>
   <p>Chia ship thành 4 phần theo chiều ngang, mỗi phần có chiều rộng khác nhau do cấu trúc của phi thuyền. "skull.png" và "gift.png" được tính là va chạm với "spaceship.png" khi tọa độ của các khối đó nằm trong 1 trong 1 phần của phi thuyền. </p>
