@@ -42,7 +42,7 @@
   <h2>Nguồn sound, file sdl </h2>
   <p>- Sound:</p>
   <p>click.mp3, pop.mp3, reward.mp3, end.mp3: https://tiengdong.com/ </p>
-  <p>file sdl: từ github của bài giảng trên lớp</p>
+  <p>file sdl, Music.mp3: từ github của bài giảng trên lớp</p>
   <p>code: vận dụng kiến thức bản thân và tham khảo code từ AI</p>
 <div>
  <div class="section">
