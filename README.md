@@ -4,7 +4,7 @@
     <p><strong>Lớp:</strong> K69I-CS1</p>
   </div>
 
-  <h1>🎮 Game: Space Shooter 🚀</h1>
+  <h1>🎮 Game: Space Shooter </h1>
 
   <div class="section">
     <h2> Giới thiệu</h2>
@@ -27,18 +27,21 @@
   </div>
 <div class="section">
   <h2>Hình ảnh có trong game</h2>
-  <p>spaceship ( tham khảo từ https://perchance.org/ai-text-to-image-generator và vẽ thêm)</p>
+  <p>- spaceship ( tham khảo từ https://perchance.org/ai-text-to-image-generator và vẽ thêm)</p>
    <img src="spaceship.png">
    
-  
-   <p>skulls (enemy) (tự vẽ)</p>
+   <p>- skulls (enemy) (tự vẽ)</p>
    <img src="skulls.png">
-   <p>gift (tham khảo trên mạng)</p>
+   
+   <p>- gift (tham khảo trên mạng)</p>
    <img src="gift.png" >
-   <p>background (tham khảo trên mạng: https://sv.vecteezy.com/vektor-konst/42056318-8bit-pixel-konst-natt-himmel-spel-plats-landskap)</p>
-   <img src="cl.jpg">
-   <p>stars (tự vẽ) </p>
-   <img scr="stars.png">
+   
+   <p>- background (tham khảo trên mạng: https://sv.vecteezy.com/vektor-konst/42056318-8bit-pixel-konst-natt-himmel-spel-plats-landskap)</p>
+   <img src="cl.jpg" >
+   
+   <p>- stars (tự vẽ) </p>
+   <img scr="stars.png" >
+   
   <div>
 <div class="section">
   <h2>Nguồn sound, file sdl </h2>
