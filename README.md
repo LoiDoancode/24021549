@@ -37,6 +37,8 @@
    <img src="gift.png" >
    <p>background (tham khảo trên mạng: https://sv.vecteezy.com/vektor-konst/42056318-8bit-pixel-konst-natt-himmel-spel-plats-landskap)</p>
    <img src="cl.jpg">
+   <p>stars (tự vẽ) </p>
+   <img scr="stars.png">
   <div>
 <div class="section">
   <h2>Nguồn sound, file sdl </h2>
