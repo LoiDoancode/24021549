@@ -35,7 +35,7 @@
    <img src="skulls.png">
    <p>gift (tham khảo trên mạng)</p>
    <img src="gift.png" >
-   <p>background (tham khảo trên mạng)</p>
+   <p>background (tham khảo trên mạng: https://sv.vecteezy.com/vektor-konst/42056318-8bit-pixel-konst-natt-himmel-spel-plats-landskap)</p>
    <img src="cl.jpg">
   <div>
 <div class="section">
